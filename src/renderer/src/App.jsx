@@ -1,9 +1,11 @@
 import Versions from './components/Versions'
 import icons from './assets/icons.svg'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
     <div className="container">
+      <Navbar />
       <Versions></Versions>
 
       <svg className="hero-logo" viewBox="0 0 900 300">
