@@ -4,7 +4,7 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <a>Home</a>
+      <a>Profile</a>
     </div>
   )
 }

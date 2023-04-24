@@ -4,7 +4,7 @@ function Navbar() {
       <h1>My Recipes</h1>
       <ul>
         <li>
-          <a href="#">Home</a>
+          <a href="Home">Home</a>
         </li>
         <li>
           <a href="#">Recipes</a>
