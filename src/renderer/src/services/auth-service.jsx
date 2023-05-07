@@ -13,7 +13,6 @@ class authService {
       .post(apiUrl + '/api/Account/Login', data, {
         withCredentials: true,
         headers: {
-          'ngrok-skip-browser-warning': true,
           'Content-Type': 'application/json'
         }
       })
@@ -21,7 +20,6 @@ class authService {
         if (response.data.successStatus === true) {
           localStorage.setItem('user', JSON.stringify(response.data))
         }
-        // console.log(response.data);
         return response.data
       })
   }

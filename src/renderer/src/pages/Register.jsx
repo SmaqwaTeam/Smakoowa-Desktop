@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Navbar from '../components/Navbar'
 
 function Copyright(props) {
   return (
@@ -25,7 +26,11 @@ function Copyright(props) {
   )
 }
 
-const theme = createTheme()
+const theme = createTheme({
+  palette: {
+    mode: 'dark'
+  }
+})
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -39,7 +44,8 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Navbar />
+      <Container component="main" maxWidth="xl">
         <CssBaseline />
         <Box
           sx={{

@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -13,7 +14,14 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 
-const pages = ['Home', 'Recipes', 'Categories', 'Top Recipes', 'About Us']
+const pages = [
+  { name: 'Home', link: '/' },
+  { name: 'Recipes', link: '/login' },
+  { name: 'Categories', link: '/categories' },
+  { name: 'Register', link: '/register' },
+  { name: 'About Us', link: '/about' }
+]
+
 const settings = ['Your Recipes', 'Account', 'Dashboard', 'Logout']
 
 function Navbar() {
@@ -23,6 +31,7 @@ function Navbar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
@@ -43,8 +52,8 @@ function Navbar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -88,8 +97,10 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" component={Link} to={page.link}>
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -98,8 +109,8 @@ function Navbar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -116,11 +127,13 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to={page.link} style={{ color: 'inherit', textDecoration: 'none' }}>
+                  {page.name}
+                </Link>
               </Button>
             ))}
           </Box>
@@ -159,4 +172,5 @@ function Navbar() {
     </AppBar>
   )
 }
+
 export default Navbar

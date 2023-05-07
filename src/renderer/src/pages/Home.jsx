@@ -60,7 +60,7 @@ export default function Album() {
               Smakoowa Welcome
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Share with us with yours recipe or explore whole world of cooking
+              Share with us with yours recipe or explore whole world of cooking!
             </Typography>
             <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
               <Button variant="contained">Add Recipe</Button>
