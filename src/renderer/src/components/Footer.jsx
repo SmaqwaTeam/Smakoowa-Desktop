@@ -6,7 +6,7 @@ function Footer() {
     <Typography variant="body1" color="text.secondary" align="center">
       {'Copyright not yet reserved © '}
       <Link color="inherit" href="https://github.com/SmaqwaTeam">
-        Github
+        SmaqwaTeam
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
