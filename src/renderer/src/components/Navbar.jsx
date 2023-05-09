@@ -14,11 +14,13 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 
+import authService from '../services/auth-service'
+
 const pages = [
   { name: 'Home', link: '/' },
-  { name: 'Recipes', link: '/login' },
+  { name: 'Recipes', link: '/Recipes' },
   { name: 'Categories', link: '/categories' },
-  { name: 'Register', link: '/register' },
+  { name: 'Top Recipes', link: '/top-recipes' },
   { name: 'About Us', link: '/about' }
 ]
 
@@ -43,6 +45,8 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
+
+  const loggedIn = authService.loggedIn()
 
   return (
     <AppBar position="static">
@@ -122,7 +126,7 @@ function Navbar() {
               textDecoration: 'none'
             }}
           >
-            LOGO
+            Smakoowa!
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -139,11 +143,28 @@ function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {loggedIn ? (
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <>
+                <Button component={Link} to="/login" variant="contained" color="secondary">
+                  Sign In
+                </Button>
+                <Button
+                  component={Link}
+                  to="/register"
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ ml: 2 }}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -160,11 +181,13 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {loggedIn
+                ? settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))
+                : null}
             </Menu>
           </Box>
         </Toolbar>

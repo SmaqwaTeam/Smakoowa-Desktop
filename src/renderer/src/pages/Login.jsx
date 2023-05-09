@@ -9,46 +9,49 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import background from '.././assets/background.jpg'
+import { useState } from 'react'
 
 import Navbar from '.././components/Navbar'
+import Footer from '.././components/Footer'
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright not yet reserved © '}
-      <Link color="inherit" href="https://github.com/SmaqwaTeam">
-        Github
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import authService from '../services/auth-service'
 
-const theme = createTheme()
+const theme = createTheme({
+  palette: {
+    mode: 'dark'
+  }
+})
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
+
+    try {
+      const response = await authService.login(username, password)
+      console.log(response)
+
+      // Przetwarzanie odpowiedzi lub przekierowanie użytkownika
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Navbar />
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://imgur.com/9tjEdbo)',
+            backgroundImage: `url(${background})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'dark' ? t.palette.grey[50] : t.palette.grey[900],
@@ -77,11 +80,13 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
                 autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -92,6 +97,8 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
@@ -103,7 +110,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Footer sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
