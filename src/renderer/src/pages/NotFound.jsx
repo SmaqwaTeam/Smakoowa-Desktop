@@ -30,7 +30,7 @@ export default function NotFound() {
             Not Found 404
           </Typography>
           <Typography variant="h5" component="h2" gutterBottom>
-            {'Something wrong with your patch young jedi'}
+            {'Something wrong with your patch, young jedi'}
           </Typography>
           <Typography variant="body1">restart app or choose another side on Navbar</Typography>
         </Container>
