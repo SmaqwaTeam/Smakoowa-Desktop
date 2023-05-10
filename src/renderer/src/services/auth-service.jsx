@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'https://localhost:7188'
+const apiUrl = 'https://smakoowaapi.azurewebsites.net'
 
 class authService {
   async login(username, password) {

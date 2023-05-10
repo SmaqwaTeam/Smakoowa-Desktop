@@ -5,13 +5,14 @@ import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
+
 import authService from './services/auth-service'
 
 export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loggedIn: authService.loggedIn()
+      loggedIn: authService.loggedIn() //Token i logowanie remember
     }
   }
 

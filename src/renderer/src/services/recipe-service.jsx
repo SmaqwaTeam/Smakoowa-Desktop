@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const apiUrl = 'https://localhost:7188/api'
+const apiUrl = 'https://smakoowaapi.azurewebsites.net'
 
-const apiService = {
+const GetAllRecipes = {
   async getRecipes() {
     try {
-      const response = await axios.get(`${apiUrl}/Recipes/GetAll`)
+      const response = await axios.get(`${apiUrl}/api/Recipes/GetAll`)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch recipes')
@@ -13,4 +13,4 @@ const apiService = {
   }
 }
 
-export default apiService
+export default GetAllRecipes

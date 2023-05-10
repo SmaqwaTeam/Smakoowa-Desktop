@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { styled } from '@mui/material/styles'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
@@ -11,86 +11,100 @@ import Typography from '@mui/material/Typography'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import './../assets/background.jpg'
+import RecipeService from './../services/recipe-service'
 
-const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest
-  })
-}))
-
-export default function RecipeReviewCard() {
+const RecipeCard = ({ recipe }) => {
   const [expanded, setExpanded] = React.useState(false)
+  const [image, setImage] = React.useState(null) // Stan przechowujący obrazek
+
+  React.useEffect(() => {
+    // Pobieranie obrazka po załadowaniu komponentu
+    const fetchImage = async () => {
+      try {
+        const imageData = await RecipeService.getRecipeImage(recipe.id)
+        setImage(imageData)
+      } catch (error) {
+        console.error('Failed to fetch recipe image', error)
+      }
+    }
+
+    fetchImage()
+  }, [recipe.id])
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardHeader
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={recipe.name}
+        subheader={recipe.date} // Użyj właściwości `date` z obiektu `recipe`
       />
-      <CardMedia
-        component="img"
-        height="194"
-        image="'./../assets/background.jpg'"
-        alt="Paella dish"
-      />
+      {image && (
+        <CardMedia
+          component="img"
+          height="194"
+          src={image} // Użyj pobranego obrazka
+          alt="pic"
+        />
+      )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          {recipe.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
+        <IconButton aria-label="show more" onClick={handleExpandClick} aria-expanded={expanded}>
           <ExpandMoreIcon />
-        </ExpandMore>
+        </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don&apos;t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
+          <Typography paragraph>Ingredients:</Typography>
+          <ul>
+            {recipe.ingredients?.map((ingredient) => (
+              <li key={ingredient.position}>{ingredient.name}</li>
+            ))}
+          </ul>
+          <ol>
+            {recipe.instructions?.map((instruction) => (
+              <li key={instruction.position}>{instruction.content}</li>
+            ))}
+          </ol>
         </CardContent>
       </Collapse>
     </Card>
   )
 }
+
+RecipeCard.propTypes = {
+  recipe: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        position: PropTypes.number.isRequired
+      })
+    ).isRequired,
+    instructions: PropTypes.arrayOf(
+      PropTypes.shape({
+        content: PropTypes.string.isRequired,
+        position: PropTypes.number.isRequired
+      })
+    ).isRequired
+  }).isRequired
+}
+
+export default RecipeCard
