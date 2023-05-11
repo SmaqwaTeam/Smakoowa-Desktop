@@ -1,19 +1,22 @@
+import { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
-import Footer from '.././components/Footer'
+import Footer from '../components/Footer'
+
+import authService from '../services/auth-service'
 
 const theme = createTheme({
   palette: {
@@ -22,13 +25,23 @@ const theme = createTheme({
 })
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
+    try {
+      await authService.register(username, password, email)
+      // Dodaj kod obsługujący rejestrację sukcesu (np. wyświetlanie komunikatu)
+      console.log('Rejestracja udana!')
+      navigate('/')
+    } catch (error) {
+      // Dodaj kod obsługujący błąd rejestracji (np. wyświetlanie komunikatu o błędzie)
+      setError('Błąd rejestracji:', error)
+    }
   }
 
   return (
@@ -50,6 +63,12 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          {error && (
+            <Typography variant="body2" color="error">
+              {error}
+            </Typography>
+          )}
+          <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}></Box>
           <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -61,6 +80,8 @@ export default function SignUp() {
                   id="login"
                   label="Login"
                   autoFocus
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -71,6 +92,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -82,6 +105,8 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -94,13 +119,7 @@ export default function SignUp() {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+            <Grid container justifyContent="flex-end"></Grid>
           </Box>
         </Box>
         <Footer sx={{ mt: 5 }} />

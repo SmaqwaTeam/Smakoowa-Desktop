@@ -5,6 +5,7 @@ import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
+import About from './pages/About'
 
 import authService from './services/auth-service'
 
@@ -29,7 +30,15 @@ export default class App extends Component {
             path="/login"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Login />}
           />
-          <Route path="/register" element={<Register />} />
+          {/* <Route 
+          path="/addrecipe"
+            element={this.state.loggedIn ? <AddRecipe /> : <Navigate to="/login" />}
+    /> */}
+          <Route
+            path="/register"
+            element={this.state.loggedIn ? <Navigate to="/profile" /> : <Register />}
+          />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

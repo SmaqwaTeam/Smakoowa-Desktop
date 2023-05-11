@@ -18,7 +18,6 @@ import authService from '../services/auth-service'
 
 const pages = [
   { name: 'Home', link: '/' },
-  { name: 'Recipes', link: '/Recipes' },
   { name: 'Categories', link: '/categories' },
   { name: 'Top Recipes', link: '/top-recipes' },
   { name: 'About Us', link: '/about' }
@@ -29,7 +28,6 @@ const settings = ['Your Recipes', 'Account', 'Dashboard', 'Logout']
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -44,6 +42,13 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleLogout = () => {
+    authService.logout()
+    localStorage.removeItem('userData')
+    window.location.href = '/login'
+    // Perform any additional logout logic here (e.g., clearing user data, redirecting, etc.)
   }
 
   const loggedIn = authService.loggedIn()
@@ -107,6 +112,13 @@ function Navbar() {
                   </Typography>
                 </MenuItem>
               ))}
+              {loggedIn && (
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" component={Link} to="/likes">
+                    Likes
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -134,12 +146,24 @@ function Navbar() {
                 key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to={page.link}
+                style={{ color: 'inherit', textDecoration: 'none' }}
               >
-                <Link to={page.link} style={{ color: 'inherit', textDecoration: 'none' }}>
-                  {page.name}
-                </Link>
+                {page.name}
               </Button>
             ))}
+            {loggedIn && (
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/likes"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                Likes
+              </Button>
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -184,7 +208,13 @@ function Navbar() {
               {loggedIn
                 ? settings.map((setting) => (
                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                      {setting === 'Logout' ? (
+                        <Typography textAlign="center" onClick={handleLogout}>
+                          {setting}
+                        </Typography>
+                      ) : (
+                        <Typography textAlign="center">{setting}</Typography>
+                      )}
                     </MenuItem>
                   ))
                 : null}
