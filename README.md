@@ -1,6 +1,6 @@
 # react
 
-An Electron application with React
+An Electron application with React + Electron + Vite + React Router + Webpack
 
 ## Recommended IDE Setup
 
