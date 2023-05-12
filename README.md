@@ -1,6 +1,6 @@
-# react
+# Smakoowa desktop
 
-An Electron application with React + Electron + Vite + React Router + Webpack
+An application with React + Electron + Vite + React Router + Webpack
 
 ## Recommended IDE Setup
 
