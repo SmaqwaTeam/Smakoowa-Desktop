@@ -19,6 +19,7 @@ import authService from '../services/auth-service'
 const pages = [
   { name: 'Home', link: '/' },
   { name: 'Categories', link: '/categories' },
+  { name: 'Search', link: '/search' },
   { name: 'Top Recipes', link: '/top-recipes' },
   { name: 'About Us', link: '/about' }
 ]
@@ -114,8 +115,8 @@ function Navbar() {
               ))}
               {loggedIn && (
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component={Link} to="/likes">
-                    Likes
+                  <Typography textAlign="center" component={Link} to="/liked">
+                    Liked
                   </Typography>
                 </MenuItem>
               )}
@@ -158,10 +159,10 @@ function Navbar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={Link}
-                to="/likes"
+                to="/liked"
                 style={{ color: 'inherit', textDecoration: 'none' }}
               >
-                Likes
+                Liked
               </Button>
             )}
           </Box>
@@ -170,7 +171,7 @@ function Navbar() {
             {loggedIn ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src="" />
                 </IconButton>
               </Tooltip>
             ) : (
