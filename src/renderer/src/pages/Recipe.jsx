@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+import RecipeDetails from '../components/RecipeDetails'
 import Navbar from '../components/Navbar'
 import Footer from '.././components/Footer'
 
@@ -13,7 +14,7 @@ const theme = createTheme({
   }
 })
 
-export default function Profile() {
+export default function Recipe() {
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -26,13 +27,7 @@ export default function Profile() {
         <Navbar />
         <CssBaseline />
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
-          <Typography variant="h2" component="h1" gutterBottom>
-            Profile{' '}
-          </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
-            {'Something wrong with your patch, young jedi'}
-          </Typography>
-          <Typography variant="body1">restart app or choose another option on Navbar</Typography>
+          <RecipeDetails />
         </Container>
         <Box
           component="footer"

@@ -12,6 +12,7 @@ import RecipeCard from '../components/RecipeCard'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import GetAllRecipes from '../services/recipe-service'
+import { Link } from 'react-router-dom'
 
 const theme = createTheme({
   palette: {
@@ -65,8 +66,12 @@ export default function Home() {
               Share your recipes or explore the world of cooking!
             </Typography>
             <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-              <Button variant="contained">Add Recipe</Button>
-              <Button variant="outlined">Show your recipes</Button>
+              <Button variant="contained" component={Link} to="/addrecipe">
+                Add Recipe
+              </Button>
+              <Button variant="outlined" component={Link} to="/profile">
+                Show your recipes
+              </Button>
             </Stack>
           </Container>
         </Box>

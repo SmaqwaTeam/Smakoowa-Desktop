@@ -7,6 +7,8 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
 import SearchBar from './pages/SearchBar'
+import AddRecipe from './pages/AddRecipe'
+import Recipe from './pages/Recipe'
 
 import authService from './services/auth-service'
 
@@ -35,15 +37,16 @@ export default class App extends Component {
             path="/login"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Login />}
           />
-          {/* <Route 
-          path="/addrecipe"
+          <Route
+            path="/addrecipe"
             element={this.state.loggedIn ? <AddRecipe /> : <Navigate to="/login" />}
-    /> */}
+          />
           <Route path="/search" element={<SearchBar />} />
           <Route
             path="/register"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Register />}
           />
+          <Route path="/recipe/:id" element={<Recipe />} />{' '}
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

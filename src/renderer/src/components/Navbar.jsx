@@ -18,9 +18,8 @@ import authService from '../services/auth-service'
 
 const pages = [
   { name: 'Home', link: '/' },
-  { name: 'Categories', link: '/categories' },
   { name: 'Search', link: '/search' },
-  { name: 'Top Recipes', link: '/top-recipes' },
+  { name: 'Categories', link: '/categories' },
   { name: 'About Us', link: '/about' }
 ]
 
@@ -48,7 +47,7 @@ function Navbar() {
   const handleLogout = () => {
     authService.logout()
     localStorage.removeItem('userData')
-    window.location.href = '/login'
+    window.location.href = '/'
     // Perform any additional logout logic here (e.g., clearing user data, redirecting, etc.)
   }
 
@@ -163,6 +162,17 @@ function Navbar() {
                 style={{ color: 'inherit', textDecoration: 'none' }}
               >
                 Liked
+              </Button>
+            )}
+            {loggedIn && (
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/addrecipe"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                Add Recipe
               </Button>
             )}
           </Box>
