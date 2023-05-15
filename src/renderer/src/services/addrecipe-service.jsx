@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 const apiUrl = 'https://smakoowaapi.azurewebsites.net'
 
 const handleSubmitForm = async (
@@ -36,8 +37,6 @@ const handleSubmitForm = async (
 
     if (data.successStatus) {
       console.log(data.message)
-      // Przekierowanie do '/profile' po pomyślnym dodaniu przepisu
-      // Możesz użyć odpowiedniej metody do przekierowania, np. this.$router.push('/profile') dla frameworka Vue.js
     } else {
       alert(data.message)
     }

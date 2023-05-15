@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import InstructionsForm from '../components/InstructionsForm'
 import Navbar from '../components/Navbar'
 import Footer from '.././components/Footer'
 
@@ -26,7 +25,6 @@ export default function About() {
         <Navbar />
         <CssBaseline />
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
-          <InstructionsForm />
           <Typography variant="h2" component="h1" gutterBottom>
             About us
           </Typography>

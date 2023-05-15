@@ -33,8 +33,6 @@ export default function SignInSide() {
       const response = await authService.login(username, password)
       console.log(response)
       window.location.reload()
-
-      // Przetwarzanie odpowiedzi lub przekierowanie użytkownika
     } catch (error) {
       console.log(error)
     }

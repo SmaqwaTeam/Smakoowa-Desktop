@@ -1,10 +1,9 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import RecipeDetails from '../components/RecipeDetails'
+import RecipeDetails from '../components/Recipe/RecipeDetails'
 import Navbar from '../components/Navbar'
 import Footer from '.././components/Footer'
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   Typography,
@@ -8,14 +8,20 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  ListItemIcon,
+  Avatar
 } from '@mui/material'
-import RecipeDetailsService from '../services/recipedetails-service'
-import nopicImage from './../assets/nopic.jpg'
+
+import { RecipeDataContext } from '../../context/contextData'
+import RecipeDetailsService from '../../services/recipedetails-service'
+import nopicImage from '../../assets/nopic.jpg'
 
 const RecipeDetails = () => {
   const { id } = useParams()
   const [recipe, setRecipe] = useState(null)
+  const { getCategoryName, getTagName } = useContext(RecipeDataContext)
+  const url = 'https://smakoowaapi.azurewebsites.net'
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
@@ -35,9 +41,9 @@ const RecipeDetails = () => {
   }
 
   const {
-    imageId,
     creatorUsername,
     name,
+    likeCount,
     description,
     servingsTier,
     timeToMakeTier,
@@ -50,8 +56,10 @@ const RecipeDetails = () => {
   } = recipe
 
   const imageUrl = recipe.imageId
-    ? `https://smakoowaapi.azurewebsites.net/api/Images/GetRecipeImage/${recipe.imageId}`
+    ? `${url}/api/Images/GetRecipeImage/${recipe.imageId}`
     : nopicImage
+
+  const formattedDate = new Date(createdAt).toISOString().split('T')[0]
 
   return (
     <Grid container spacing={3}>
@@ -60,7 +68,7 @@ const RecipeDetails = () => {
           <CardMedia component="img" image={imageUrl} alt="Recipe" />
         </Card>
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xl={16} sm={6}>
         <Card>
           <CardContent>
             <Typography variant="h4" component="h1">
@@ -73,16 +81,22 @@ const RecipeDetails = () => {
               Creator: {creatorUsername}
             </Typography>
             <Typography variant="body1" gutterBottom>
+              Created At: {formattedDate}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Likes: {likeCount}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
               Servings Tier: {servingsTier}
             </Typography>
             <Typography variant="body1" gutterBottom>
               Time to Make Tier: {timeToMakeTier}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Category ID: {categoryId}
+              Category: {getCategoryName(categoryId)}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Tag IDs: {tagIds.join(', ')}
+              Tags: {tagIds.map((tagId) => getTagName(tagId)).join(', ')}
             </Typography>
             <Typography variant="h6" component="h2">
               Instructions:
@@ -108,16 +122,18 @@ const RecipeDetails = () => {
               Comments:
             </Typography>
             {recipeComments.map((comment) => (
-              <div key={comment.id}>
-                <Typography variant="body1" gutterBottom>
-                  Content: {comment.content}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  Created At: {comment.createdAt}
-                </Typography>
-              </div>
+              <ListItem key={comment.id}>
+                <ListItemIcon>
+                  <Avatar src="" />
+                </ListItemIcon>
+                <ListItemText
+                  primary={comment.content}
+                  secondary={`${new Date(comment.createdAt).toISOString().split('T')[0]} ${new Date(
+                    comment.createdAt
+                  ).getHours()}:${new Date(comment.createdAt).getMinutes()}`}
+                />
+              </ListItem>
             ))}
-            <Typography variant="body1">Created At: {createdAt}</Typography>
           </CardContent>
         </Card>
       </Grid>

@@ -9,6 +9,8 @@ import About from './pages/About'
 import SearchBar from './pages/SearchBar'
 import AddRecipe from './pages/AddRecipe'
 import Recipe from './pages/Recipe'
+import Categories from './pages/Categories'
+import Liked from './pages/Liked'
 
 import authService from './services/auth-service'
 
@@ -29,10 +31,10 @@ export default class App extends Component {
             path="/profile"
             element={this.state.loggedIn ? <Profile /> : <Navigate to="/login" />}
           />
-          {/* <Route
+          <Route
             path="/liked"
             element={this.state.loggedIn ? <Liked /> : <Navigate to="/login" />}
-          />*/}
+          />
           <Route
             path="/login"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Login />}
@@ -42,6 +44,7 @@ export default class App extends Component {
             element={this.state.loggedIn ? <AddRecipe /> : <Navigate to="/login" />}
           />
           <Route path="/search" element={<SearchBar />} />
+          <Route path="/categories" element={<Categories />} />
           <Route
             path="/register"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Register />}

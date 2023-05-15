@@ -13,6 +13,7 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import authService from '../services/auth-service'
 
@@ -23,7 +24,7 @@ const pages = [
   { name: 'About Us', link: '/about' }
 ]
 
-const settings = ['Your Recipes', 'Account', 'Dashboard', 'Logout']
+const settings = ['Logout']
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -48,10 +49,23 @@ function Navbar() {
     authService.logout()
     localStorage.removeItem('userData')
     window.location.href = '/'
-    // Perform any additional logout logic here (e.g., clearing user data, redirecting, etc.)
   }
 
   const loggedIn = authService.loggedIn()
+
+  const isLoggedProfile = () => {
+    if (loggedIn) {
+      // Render the logged-in user profile
+      return (
+        <MenuItem onClick={handleCloseUserMenu}>
+          <Typography textAlign="center" component={Link} to="/profile">
+            <ArrowForwardIcon />
+          </Typography>
+        </MenuItem>
+      )
+    }
+    return null
+  }
 
   return (
     <AppBar position="static">
@@ -179,11 +193,14 @@ function Navbar() {
 
           <Box sx={{ flexGrow: 0 }}>
             {loggedIn ? (
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
-                </IconButton>
-              </Tooltip>
+              <>
+                {isLoggedProfile()}
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src="" />
+                  </IconButton>
+                </Tooltip>
+              </>
             ) : (
               <>
                 <Button component={Link} to="/login" variant="contained" color="secondary">

@@ -33,11 +33,9 @@ export default function SignUp() {
     event.preventDefault()
     try {
       await authService.register(username, password, email)
-      // Dodaj kod obsługujący rejestrację sukcesu (np. wyświetlanie komunikatu)
       console.log('Rejestracja udana!')
       window.location.href = '/'
     } catch (error) {
-      // Dodaj kod obsługujący błąd rejestracji (np. wyświetlanie komunikatu o błędzie)
       setError('Błąd rejestracji:', error)
     }
   }
