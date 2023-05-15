@@ -6,6 +6,11 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
+import SearchBar from './pages/SearchBar'
+import AddRecipe from './pages/AddRecipe'
+import Recipe from './pages/Recipe'
+import Categories from './pages/Categories'
+import Liked from './pages/Liked'
 
 import authService from './services/auth-service'
 
@@ -27,17 +32,24 @@ export default class App extends Component {
             element={this.state.loggedIn ? <Profile /> : <Navigate to="/login" />}
           />
           <Route
+            path="/liked"
+            element={this.state.loggedIn ? <Liked /> : <Navigate to="/login" />}
+          />
+          <Route
             path="/login"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Login />}
           />
-          {/* <Route 
-          path="/addrecipe"
+          <Route
+            path="/addrecipe"
             element={this.state.loggedIn ? <AddRecipe /> : <Navigate to="/login" />}
-    /> */}
+          />
+          <Route path="/search" element={<SearchBar />} />
+          <Route path="/categories" element={<Categories />} />
           <Route
             path="/register"
             element={this.state.loggedIn ? <Navigate to="/profile" /> : <Register />}
           />
+          <Route path="/recipe/:id" element={<Recipe />} />{' '}
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

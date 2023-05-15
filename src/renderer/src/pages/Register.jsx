@@ -11,7 +11,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useNavigate } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -28,18 +27,15 @@ export default function SignUp() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const navigate = useNavigate()
   const [error, setError] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
       await authService.register(username, password, email)
-      // Dodaj kod obsługujący rejestrację sukcesu (np. wyświetlanie komunikatu)
       console.log('Rejestracja udana!')
-      navigate('/')
+      window.location.href = '/'
     } catch (error) {
-      // Dodaj kod obsługujący błąd rejestracji (np. wyświetlanie komunikatu o błędzie)
       setError('Błąd rejestracji:', error)
     }
   }

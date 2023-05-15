@@ -1,12 +1,11 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+import RecipeDetails from '../components/Recipe/RecipeDetails'
 import Navbar from '../components/Navbar'
 import Footer from '.././components/Footer'
-import AddRecipeForm from '../components/Recipe/AddRecipeform'
 
 const theme = createTheme({
   palette: {
@@ -14,7 +13,7 @@ const theme = createTheme({
   }
 })
 
-export default function AddRecipe() {
+export default function Recipe() {
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -27,9 +26,7 @@ export default function AddRecipe() {
         <Navbar />
         <CssBaseline />
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
-          <Typography variant="h2" component="h1" gutterBottom>
-            <AddRecipeForm />
-          </Typography>
+          <RecipeDetails />
         </Container>
         <Box
           component="footer"

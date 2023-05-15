@@ -6,15 +6,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import Navbar from '../components/Navbar'
 import Footer from '.././components/Footer'
-import AddRecipeForm from '../components/Recipe/AddRecipeform'
-
+import AllCategories from '../components/Recipe/AllCategories'
 const theme = createTheme({
   palette: {
     mode: 'dark'
   }
 })
 
-export default function AddRecipe() {
+export default function NotFound() {
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -28,8 +27,9 @@ export default function AddRecipe() {
         <CssBaseline />
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
           <Typography variant="h2" component="h1" gutterBottom>
-            <AddRecipeForm />
+            Categories
           </Typography>
+          <AllCategories />
         </Container>
         <Box
           component="footer"

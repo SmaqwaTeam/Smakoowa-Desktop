@@ -13,17 +13,18 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import authService from '../services/auth-service'
 
 const pages = [
   { name: 'Home', link: '/' },
+  { name: 'Search', link: '/search' },
   { name: 'Categories', link: '/categories' },
-  { name: 'Top Recipes', link: '/top-recipes' },
   { name: 'About Us', link: '/about' }
 ]
 
-const settings = ['Your Recipes', 'Account', 'Dashboard', 'Logout']
+const settings = ['Logout']
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -47,11 +48,24 @@ function Navbar() {
   const handleLogout = () => {
     authService.logout()
     localStorage.removeItem('userData')
-    window.location.href = '/login'
-    // Perform any additional logout logic here (e.g., clearing user data, redirecting, etc.)
+    window.location.href = '/'
   }
 
   const loggedIn = authService.loggedIn()
+
+  const isLoggedProfile = () => {
+    if (loggedIn) {
+      // Render the logged-in user profile
+      return (
+        <MenuItem onClick={handleCloseUserMenu}>
+          <Typography textAlign="center" component={Link} to="/profile">
+            <ArrowForwardIcon />
+          </Typography>
+        </MenuItem>
+      )
+    }
+    return null
+  }
 
   return (
     <AppBar position="static">
@@ -114,8 +128,8 @@ function Navbar() {
               ))}
               {loggedIn && (
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component={Link} to="/likes">
-                    Likes
+                  <Typography textAlign="center" component={Link} to="/liked">
+                    Liked
                   </Typography>
                 </MenuItem>
               )}
@@ -158,21 +172,35 @@ function Navbar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={Link}
-                to="/likes"
+                to="/liked"
                 style={{ color: 'inherit', textDecoration: 'none' }}
               >
-                Likes
+                Liked
+              </Button>
+            )}
+            {loggedIn && (
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/addrecipe"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                Add Recipe
               </Button>
             )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             {loggedIn ? (
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
+              <>
+                {isLoggedProfile()}
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src="" />
+                  </IconButton>
+                </Tooltip>
+              </>
             ) : (
               <>
                 <Button component={Link} to="/login" variant="contained" color="secondary">

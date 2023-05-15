@@ -11,32 +11,30 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import RecipeCard from '../components/Recipe/RecipeCard'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import GetAllRecipes from '../services/recipe-service'
-import { Link } from 'react-router-dom'
-
+import GetLikedRecipes from '../services/likedrecipes-service'
 const theme = createTheme({
   palette: {
     mode: 'dark'
   }
 })
 
-export default function Home() {
+export default function Liked() {
   const [recipes, setRecipes] = useState([])
 
   useEffect(() => {
-    fetchRecipes()
+    fetchLikedRecipes()
   }, [])
 
-  const fetchRecipes = async () => {
+  const fetchLikedRecipes = async () => {
     try {
-      const response = await GetAllRecipes.getRecipes()
+      const response = await GetLikedRecipes.getLikedRecipes()
       if (response.content && Array.isArray(response.content)) {
         setRecipes(response.content)
       } else {
         console.error('Invalid response format:', response)
       }
     } catch (error) {
-      console.error('Failed to fetch recipes:', error)
+      console.error('Failed to fetch liked recipes:', error)
     }
   }
 
@@ -60,18 +58,12 @@ export default function Home() {
               color="text.primary"
               gutterBottom
             >
-              Smakoowa Welcome
+              Your liked recipes
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Share your recipes or explore the world of cooking!
-            </Typography>
+            <Typography variant="h5" align="center" color="text.secondary" paragraph></Typography>
             <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-              <Button variant="contained" component={Link} to="/addrecipe">
-                Add Recipe
-              </Button>
-              <Button variant="outlined" component={Link} to="/profile">
-                Show your recipes
-              </Button>
+              <Button variant="contained">Add Recipe</Button>
+              <Button variant="outlined">Show your recipes</Button>
             </Stack>
           </Container>
         </Box>

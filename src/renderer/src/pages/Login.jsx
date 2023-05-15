@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import background from '.././assets/background.jpg'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import Navbar from '.././components/Navbar'
 import Footer from '.././components/Footer'
@@ -26,7 +25,6 @@ const theme = createTheme({
 export default function SignInSide() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -34,9 +32,7 @@ export default function SignInSide() {
     try {
       const response = await authService.login(username, password)
       console.log(response)
-      navigate('/')
-
-      // Przetwarzanie odpowiedzi lub przekierowanie użytkownika
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }

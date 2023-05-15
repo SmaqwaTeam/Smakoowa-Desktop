@@ -1,16 +1,17 @@
-import { app, shell, BrowserWindow } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+const { app, shell, BrowserWindow } = require('electron')
+const { join } = require('path')
+const { electronApp, optimizer, is } = require('@electron-toolkit/utils')
+const iconPath = join(__dirname, '../../resources/icon.png')
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    icon: iconPath,
     width: 900,
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { iconPath } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
