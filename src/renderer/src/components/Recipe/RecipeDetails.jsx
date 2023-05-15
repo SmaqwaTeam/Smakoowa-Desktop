@@ -10,8 +10,10 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Avatar
+  Avatar,
+  Chip
 } from '@mui/material'
+import AddComment from './AddComment'
 
 import { RecipeDataContext } from '../../context/contextData'
 import RecipeDetailsService from '../../services/recipedetails-service'
@@ -21,9 +23,24 @@ const RecipeDetails = () => {
   const { id } = useParams()
   const [recipe, setRecipe] = useState(null)
   const { getCategoryName, getTagName } = useContext(RecipeDataContext)
+  const [timeToMakeTierMap, setTimeToMakeTierMap] = useState({})
+  const [servingsTierMap, setServingsTierMap] = useState({})
   const url = 'https://smakoowaapi.azurewebsites.net'
+  const { timeToMakeTiers, servingsTiers } = useContext(RecipeDataContext)
 
   useEffect(() => {
+    const timeToMakeTierMap = {}
+    timeToMakeTiers.forEach((tier, index) => {
+      timeToMakeTierMap[index] = tier
+    })
+    setTimeToMakeTierMap(timeToMakeTierMap)
+
+    const servingsTierMap = {}
+    servingsTiers.forEach((tier, index) => {
+      servingsTierMap[index] = tier
+    })
+    setServingsTierMap(servingsTierMap)
+
     const fetchRecipeDetails = async () => {
       try {
         const response = await RecipeDetailsService.getRecipeDetails(id)
@@ -34,7 +51,7 @@ const RecipeDetails = () => {
     }
 
     fetchRecipeDetails()
-  }, [id])
+  }, [id, timeToMakeTiers, servingsTiers])
 
   if (!recipe) {
     return <div>Loading...</div>
@@ -48,7 +65,6 @@ const RecipeDetails = () => {
     servingsTier,
     timeToMakeTier,
     categoryId,
-    tagIds,
     instructions,
     ingredients,
     recipeComments,
@@ -74,30 +90,41 @@ const RecipeDetails = () => {
             <Typography variant="h4" component="h1">
               {name}
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              {description}
+            <Typography variant="body2" gutterBottom>
+              {formattedDate}
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Creator: {creatorUsername}
+            <CardContent>
+              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                {description}
+              </Typography>
+            </CardContent>
+            <Typography variant="h5" gutterBottom>
+              Author: {creatorUsername}
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Created At: {formattedDate}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
+
+            <Typography variant="body2" gutterBottom>
               Likes: {likeCount}
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Servings Tier: {servingsTier}
+            <Typography variant="body2" gutterBottom>
+              Servings Tier:
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Time to Make Tier: {timeToMakeTier}
+            <Chip label={servingsTierMap[servingsTier]} color="primary" variant="outlined" />
+            <Typography variant="body2" gutterBottom>
+              Time to Make Tier:
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Category: {getCategoryName(categoryId)}
+            <Chip label={timeToMakeTierMap[timeToMakeTier]} color="secondary" variant="outlined" />
+            <Typography variant="body2" gutterBottom>
+              Category:
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Tags: {tagIds.map((tagId) => getTagName(tagId)).join(', ')}
+            <Chip label={getCategoryName(categoryId)} color="primary" variant="success" />
+
+            <Typography variant="body2" gutterBottom>
+              Tags:
             </Typography>
+            {recipe.tagIds.map((tagId) => (
+              <Chip key={tagId} label={getTagName(tagId)} color="success" />
+            ))}
+            <Typography variant="body2" gutterBottom />
             <Typography variant="h6" component="h2">
               Instructions:
             </Typography>
@@ -134,6 +161,7 @@ const RecipeDetails = () => {
                 />
               </ListItem>
             ))}
+            <AddComment recipeId={id} />
           </CardContent>
         </Card>
       </Grid>

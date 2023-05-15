@@ -4,20 +4,20 @@ import PropTypes from 'prop-types'
 const apiUrl = 'https://smakoowaapi.azurewebsites.net'
 
 const TimeToMakeTier = {
-  UpTo15Min: 'UpTo15Min',
-  From15To30Min: 'From15To30Min',
-  From30To45Min: 'From30To45Min',
-  From45To60Min: 'From45To60Min',
-  Over60Min: 'Over60Min'
+  0: 'Up To 15 Min',
+  1: 'From 15 To 30 Min',
+  2: 'From 30 To 45 Min',
+  3: 'From 45 To 60 Min',
+  4: 'Over 60 Min'
 }
 
 const ServingsTier = {
-  OneOrTwo: 'OneOrTwo',
-  TwoOrThree: 'TwoOrThree',
-  ThreeOrFour: 'ThreeOrFour',
-  FourOrFive: 'FourOrFive',
-  FiveOrSix: 'FiveOrSix',
-  MoreThanSix: 'MoreThanSix'
+  0: 'One Or Two',
+  1: 'Two Or Three',
+  2: 'Three Or Four',
+  3: 'Four Or Five',
+  4: 'Five Or Six',
+  5: 'More Than Six'
 }
 
 export const RecipeDataContext = createContext()

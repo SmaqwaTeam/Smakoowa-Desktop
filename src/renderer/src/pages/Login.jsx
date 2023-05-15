@@ -25,6 +25,7 @@ const theme = createTheme({
 export default function SignInSide() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -34,7 +35,7 @@ export default function SignInSide() {
       console.log(response)
       window.location.reload()
     } catch (error) {
-      console.log(error)
+      setError('Error, try again with another data', error)
     }
   }
 
@@ -73,6 +74,11 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            {error && (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            )}
             <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"

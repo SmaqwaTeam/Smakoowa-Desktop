@@ -14,6 +14,7 @@ const columns = [
   { id: 'parameters', label: 'Parameters', minWidth: 170 },
   { id: 'requestCount', label: 'Request Count', minWidth: 170 }
 ]
+const url = 'https://smakoowaapi.azurewebsites.net'
 
 const Statistics = () => {
   const [page, setPage] = useState(0)
@@ -21,12 +22,10 @@ const Statistics = () => {
   const [statistics, setStatistics] = useState([])
 
   useEffect(() => {
-    // Pobranie tokena z local storage user
     const tokenData = localStorage.getItem('user')
     const parsedTokenData = JSON.parse(tokenData)
     const token = parsedTokenData?.content?.token
-    // Zapytanie do endpointa w celu pobrania statystyk
-    fetch('https://smakoowaapi.azurewebsites.net/api/Statistics/GetAll', {
+    fetch(`${url}/api/Statistics/GetAll`, {
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`
