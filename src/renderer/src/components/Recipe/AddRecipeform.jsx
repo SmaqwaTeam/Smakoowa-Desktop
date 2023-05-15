@@ -13,7 +13,7 @@ import {
 import { RecipeDataContext } from '../../context/contextData'
 
 const AddRecipeForm = () => {
-  const { categoryNames, tagNames, timeToMakeTiers, servingsTiers } = useContext(RecipeDataContext)
+  const { categoryNames, tagNames } = useContext(RecipeDataContext)
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -24,11 +24,7 @@ const AddRecipeForm = () => {
   const [ingredients, setIngredients] = useState([{ name: '', position: 1, group: 1 }])
   const [instructions, setInstructions] = useState([{ content: '', position: 1 }])
 
-  const getCategoryName = (categoryId) => {
-    const category = categoryNames.find((category) => category.id === categoryId)
-    return category ? category.name : ''
-  }
-
+  const url = 'https://smakoowaapi.azurewebsites.net'
   const getTagName = (tagId) => {
     const tag = tagNames.find((tag) => tag.id === tagId)
     return tag ? tag.name : ''
@@ -62,13 +58,13 @@ const AddRecipeForm = () => {
         'Content-Type': 'application/json'
       }
 
-      await axios.post('https://smakoowaapi.azurewebsites.net/api/Recipes/Create', recipeData, {
+      await axios.post(`${url}/api/Recipes/Create`, recipeData, {
         headers: headers,
         withCredentials: true
       })
 
       console.log('Recipe added successfully!')
-      window.location.href = '/'
+      window.location.reload()
     } catch (error) {
       console.error('Error adding recipe:')
     }

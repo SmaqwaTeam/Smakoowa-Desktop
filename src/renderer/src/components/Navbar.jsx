@@ -48,14 +48,13 @@ function Navbar() {
   const handleLogout = () => {
     authService.logout()
     localStorage.removeItem('userData')
-    window.location.href = '/'
+    window.location.reload()
   }
 
   const loggedIn = authService.loggedIn()
 
   const isLoggedProfile = () => {
     if (loggedIn) {
-      // Render the logged-in user profile
       return (
         <MenuItem onClick={handleCloseUserMenu}>
           <Typography textAlign="center" component={Link} to="/profile">

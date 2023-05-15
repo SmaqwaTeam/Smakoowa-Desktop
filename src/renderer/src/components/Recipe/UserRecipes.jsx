@@ -10,6 +10,7 @@ import nopicImage from '../../assets/nopic.jpg'
 export default function UserRecipes() {
   const [recipes, setRecipes] = useState([])
   const history = useNavigate()
+  const apiUrl = 'https://smakoowaapi.azurewebsites.net'
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -17,11 +18,10 @@ export default function UserRecipes() {
     const userId = user?.content?.user?.id
 
     if (!token) {
-      // Brak tokenu, możesz przekierować użytkownika do strony logowania lub podjąć inne działania
       return
     }
 
-    fetch(`https://smakoowaapi.azurewebsites.net/api/Recipes/GetUserRecipies/${userId}`, {
+    fetch(`${apiUrl}/api/Recipes/GetUserRecipies/${userId}`, {
       headers: {
         Accept: 'application/json'
       }
@@ -49,7 +49,7 @@ export default function UserRecipes() {
       return
     }
 
-    const url = `https://smakoowaapi.azurewebsites.net/api/Recipes/Delete/${recipeId}`
+    const url = `${apiUrl}/api/Recipes/Delete/${recipeId}`
 
     fetch(url, {
       method: 'DELETE',
@@ -78,7 +78,7 @@ export default function UserRecipes() {
               <CardMedia
                 component="img"
                 height="140"
-                image={`https://smakoowaapi.azurewebsites.net/api/Images/GetRecipeImage/${recipe.imageId}`}
+                image={`${apiUrl}/api/Images/GetRecipeImage/${recipe.imageId}`}
                 alt={recipe.name}
               />
             ) : (

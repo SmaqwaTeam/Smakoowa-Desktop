@@ -34,9 +34,9 @@ export default function SignUp() {
     try {
       await authService.register(username, password, email)
       console.log('Rejestracja udana!')
-      window.location.href = '/'
+      window.location.reload()
     } catch (error) {
-      setError('Błąd rejestracji:', error)
+      setError('Error, try again with another data', error)
     }
   }
 

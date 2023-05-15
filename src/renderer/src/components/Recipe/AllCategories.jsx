@@ -3,7 +3,7 @@ import { RecipeDataContext } from '../../context/contextData'
 import Box from '@mui/material/Box'
 
 export default function MyComponent() {
-  const { categoryNames, tagNames, timeToMakeTiers, servingsTiers } = useContext(RecipeDataContext)
+  const { categoryNames, tagNames } = useContext(RecipeDataContext)
 
   // Iterate over the category names and display them in a box
   const renderCategories = () => {
