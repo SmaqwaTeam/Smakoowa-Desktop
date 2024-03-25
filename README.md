@@ -19,7 +19,7 @@ This project is built using React, Electron, Vite, React Router, and Webpack.
 - ESLint
 - Prettier
 
-![preview](resources/preview.jpg)
+![preview](resources/Preview.jpg)
 
 ### Project Installation
 
