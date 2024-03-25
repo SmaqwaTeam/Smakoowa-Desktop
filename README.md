@@ -19,6 +19,8 @@ This project is built using React, Electron, Vite, React Router, and Webpack.
 - ESLint
 - Prettier
 
+![preview](resources/preview.jpg)
+
 ### Project Installation
 
 ```bash
@@ -37,4 +39,4 @@ npm run build:mac
 # For Linux
 npm run build:linux
 
-![Preview](resources/Preview.png)
+
