@@ -1,36 +1,40 @@
-# Smakoowa desktop
+# Smakoowa Desktop
 
-An application with React + Electron + Vite + React Router + Webpack
+This cross-platform culinary application allows users to explore, rate, and contribute to a community-driven recipe database. With CRUD capabilities, users can easily manage their favorite recipes. My contribution was developing the desktop version using Electron, ensuring feature parity with the mobile and web versions.
 
-## Recommended IDE Setup
+## Features
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- **Recipe Search**: Find recipes by name.
+- **Recipe Tags**: Categorize recipes for easy navigation.
+- **Recipe Rating**: Like recipes and add them to your favorites.
+- **Comments**: Engage with the community.
 
-## Project Setup
+## Development Setup
 
-### Install
+This project is built using React, Electron, Vite, React Router, and Webpack.
+
+### Recommended IDE Setup
+
+- VSCode
+- ESLint
+- Prettier
+
+### Project Installation
 
 ```bash
-$ npm install
-```
+npm install
 
-### Development
+Running in Development Mode
+npm run dev
 
-```bash
-$ npm run dev
-```
-
-### Build
-
-```bash
-# For windows
-$ npm run build:win
+Building the Application
+# For Windows
+npm run build:win
 
 # For macOS
-$ npm run build:mac
+npm run build:mac
 
 # For Linux
-$ npm run build:linux
-```
-link
-https://drive.google.com/file/d/17RTn4lSmfPDA6LxzSWS07kaLfhxmVNq7/view?usp=sharing
+npm run build:linux
+
+![Preview](resources/Preview.png)
